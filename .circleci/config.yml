@@ -8,36 +8,12 @@ jobs:
     docker:
       - image: cimg/node:15.8.0
     steps:
-      - checkout
-      - run: npm install
-      - run: cd && mkdir frontend
-      - run: cd frontend && git clone "https://github.com/jamriou/frontend.git"
-      - run: cd frontend && npm install
-      - run: cd frontend && npm run build
-      - run: cd && cp /frontend/build /backend
-  afterTests1:
-    machine: true
-    steps:
-      - run: echo "tests 1 have passed!"
-  afterTests2:
-    machine: true
-    steps:
-      - run: echo "tests 2 have passed!"
-  deploy:
-    machine: true
-    steps:
-      - run: echo "deploy"
+      - run: git clone
+      - run: git clone
+      - run: cd frontend && npm install && npm run build
+      - run: cp -r ./frontend/build ./backend
+      - run: cd backend && ls
 workflows:
   build:
     jobs:
       - checkoutAndTest
-      - afterTests1:
-          requires:
-            - checkoutAndTest
-      - afterTests2:
-          requires:
-            - checkoutAndTest
-      - deploy:
-          requires:
-            - afterTests1
-            - afterTests2
