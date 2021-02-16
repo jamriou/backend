@@ -8,8 +8,8 @@ jobs:
     docker:
       - image: cimg/node:15.8.0
     steps:
-      - run: git clone
-      - run: git clone
+      - run: git clone "https://github.com/jamriou/backend.git"
+      - run: git clone "https://github.com/jamriou/frontend.git"
       - run: cd frontend && npm install && npm run build
       - run: cp -r ./frontend/build ./backend
       - run: cd backend && ls
